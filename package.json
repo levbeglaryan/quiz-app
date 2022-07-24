@@ -1,0 +1,14 @@
+{
+	"name": "quiz-project",
+	"version": "1.0.0",
+	"description": "Quiz Game",
+	"main": "index.js",
+	"scripts": {},
+	"keywords": [
+		"JavaScript",
+		"Programming",
+		"Quiz Game"
+	],
+	"author": "Levon Beglaryan",
+	"license": "ISC"
+}
