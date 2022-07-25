@@ -1,3 +1,6 @@
+let t0 = performance.now();
+
+
 const questions = [
 	{
 		"question": "In baseball, how many fouls are an out?",
@@ -88,6 +91,15 @@ const questions = [
 			"Japan",
 			"Switzerland"
 		]
+	},
+	{
+		"question": "Who is the best defender in football",
+		"correct_answer": "Sergio Ramos",
+		"incorrect_answers": [
+			"Van Dijk",
+			"Puyol",
+			"Cannavaro"
+		]
 	}
 ];
 
@@ -101,13 +113,22 @@ const skipBtn = document.getElementById("skip_btn");
 let index = 0;
 let score = 0;
 
+// Changing question and rendering a new one
 function render(isAnswer, i) {
+	// Checking if the questions are over
 	if (index > questions.length - 1) {
+		if (isAnswer) {
+			if (answerTexts[i].innerHTML === questions[index - 1].correct_answer) {
+				score++;
+			}
+		}
+		let dt = performance.now();
 		headerContainer.innerHTML = `
 			<h1>End</h1>
 		`;
 		mainContainer.innerHTML = `
-			<h2 class="score">Your score is ${score} from ${questions.length - 1}</h2>
+			<h2 class="score">Your score is ${score} from ${questions.length}</h2>
+			<h3 class="score">Time record is ${Math.round(dt - t0)}ms</h3>
 		`;
 		skipBtn.innerHTML = `
 			<span>Repeat</span>
