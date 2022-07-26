@@ -1,6 +1,5 @@
 let t0 = performance.now();
 
-
 const questions = [
 	{
 		"question": "In baseball, how many fouls are an out?",
@@ -91,15 +90,6 @@ const questions = [
 			"Japan",
 			"Switzerland"
 		]
-	},
-	{
-		"question": "Who is the best defender in football",
-		"correct_answer": "Sergio Ramos",
-		"incorrect_answers": [
-			"Van Dijk",
-			"Puyol",
-			"Cannavaro"
-		]
 	}
 ];
 
@@ -113,16 +103,23 @@ const skipBtn = document.getElementById("skip_btn");
 let index = 0;
 let score = 0;
 
+// Checking if the answer is correct
+function checkAnswer(i) {
+	if (answerTexts[i].innerHTML === questions[index - 1].correct_answer) {
+		score++;
+	}
+}
+
 // Changing question and rendering a new one
 function render(isAnswer, i) {
 	// Checking if the questions are over
 	if (index > questions.length - 1) {
 		if (isAnswer) {
-			if (answerTexts[i].innerHTML === questions[index - 1].correct_answer) {
-				score++;
-			}
+			checkAnswer(i);
 		}
+
 		let dt = performance.now();
+
 		headerContainer.innerHTML = `
 			<h1>End</h1>
 		`;
@@ -157,11 +154,10 @@ function render(isAnswer, i) {
 		const incorrectAnswers = result.incorrect_answers;
 		incorrectAnswers.splice(Math.round(Math.random() * incorrectAnswers.length), 0, result.correct_answer);
 
-		if (isAnswer === "yes") {
-			if (answerTexts[i].innerHTML === questions[index - 1].correct_answer) {
-				score++;
-			}
+		if (isAnswer) {
+			checkAnswer(i);
 		}
+
 		question.innerHTML = result.question;
 		answerTexts.forEach((val, i) => {
 			val.innerHTML = incorrectAnswers[i];
@@ -174,7 +170,7 @@ render();
 answerBoxes.forEach((val, i) => {
 	val.addEventListener("click", () => {
 		index++;
-		render("yes", i);
+		render(true, i);
 	});
 });
 
