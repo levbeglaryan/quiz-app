@@ -1,97 +1,6 @@
-let t0 = performance.now();
+import questions from "./questions.js";
 
-const questions = [
-	{
-		"question": "In baseball, how many fouls are an out?",
-		"correct_answer": "0",
-		"incorrect_answers": [
-			"5",
-			"3",
-			"2"
-		]
-	},
-	{
-		"question": "What was the final score of the Germany vs. Brazil 2014 FIFA World Cup match?",
-		"correct_answer": "7 - 1",
-		"incorrect_answers": [
-			"0 - 1",
-			"3 - 4",
-			"16 - 0"
-		]
-	},
-	{
-		"question": "Who won the 2016 Formula 1 World Driver&#039;s Championship?",
-		"correct_answer": "Nico Rosberg",
-		"incorrect_answers": [
-			"Lewis Hamilton",
-			"Max Verstappen",
-			"Kimi Raikkonen"
-		]
-	},
-	{
-		"question": "This Canadian television sportscaster is known for his &quot;Hockey Night in Canada&quot; role, a commentary show during hockey games.",
-		"correct_answer": "Don Cherry",
-		"incorrect_answers": [
-			"Don McKellar",
-			"Don Taylor ",
-			"Donald Sutherland"
-		]
-	},
-	{
-		"question": "When was the first official international game played?",
-		"correct_answer": "1872",
-		"incorrect_answers": [
-			"1880",
-			"1863",
-			"1865"
-		]
-	},
-	{
-		"question": "What team did England beat to win in the 1966 World Cup final?",
-		"correct_answer": "West Germany",
-		"incorrect_answers": [
-			"Soviet Union",
-			"Portugal",
-			"Brazil"
-		]
-	},
-	{
-		"question": "In bowling, what is the term used for getting three consecutive strikes?",
-		"correct_answer": "Turkey",
-		"incorrect_answers": [
-			"Flamingo",
-			"Birdie",
-			"Eagle"
-		]
-	},
-	{
-		"question": "What is the name of Manchester United&#039;s home stadium?",
-		"correct_answer": "Old Trafford",
-		"incorrect_answers": [
-			"Anfield",
-			"City of Manchester Stadium",
-			"St James Park"
-		]
-	},
-	{
-		"question": "Which year did Jenson Button won his first ever Formula One World Drivers&#039; Championship?",
-		"correct_answer": "2009",
-		"incorrect_answers": [
-			"2010",
-			"2007",
-			"2006"
-		]
-	},
-	{
-		"question": "Which country will host the 2022 FIFA World Cup?",
-		"correct_answer": "Qatar",
-		"incorrect_answers": [
-			"USA",
-			"Japan",
-			"Switzerland"
-		]
-	}
-];
+let t0 = performance.now();
 
 const headerContainer = document.getElementById("container__header");
 const mainContainer = document.getElementById("container__main");
@@ -105,7 +14,7 @@ let score = 0;
 
 // Checking if the answer is correct
 function checkAnswer(i) {
-	if (answerTexts[i].innerHTML === questions[index - 1].correct_answer) {
+	if (answerTexts[i].innerHTML === questions[index - 1].correctAnswer) {
 		score++;
 	}
 }
@@ -151,8 +60,10 @@ function render(isAnswer, i) {
 		});
 	} else {
 		const result = questions[index];
-		const incorrectAnswers = result.incorrect_answers;
-		incorrectAnswers.splice(Math.round(Math.random() * incorrectAnswers.length), 0, result.correct_answer);
+		const incorrectAnswers = result.incorrectAnswers;
+		incorrectAnswers.push(result.correctAnswer);
+		// mixing incorrectAnswers elements
+		incorrectAnswers.sort(() => Math.random() - 0.5);
 
 		if (isAnswer) {
 			checkAnswer(i);
